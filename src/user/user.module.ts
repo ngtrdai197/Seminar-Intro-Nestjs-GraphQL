@@ -8,12 +8,14 @@ import { DatabaseModule } from '../database/database.module'
 import { userProviders } from './user.providers'
 import { USER_MODEL } from '../constants'
 import { PostModule } from '../post/post.module'
+import { PubsubModule } from 'src/pubsub/pubsub.module'
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: USER_MODEL, schema: UserSchema, collection: USER_MODEL },
     ]),
+    PubsubModule,
     PostModule,
     // DatabaseModule, // TODO: import here
   ],

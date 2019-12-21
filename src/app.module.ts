@@ -6,7 +6,8 @@ import { UserModule } from './user/user.module'
 import { DatabaseModule } from './database/database.module'
 import { ConfigModule } from './config/config.module'
 import { ConfigService } from './config/config.service'
-import { PostModule } from './post/post.module';
+import { PostModule } from './post/post.module'
+import { PubsubModule } from './pubsub/pubsub.module';
 
 @Module({
   imports: [
@@ -19,11 +20,13 @@ import { PostModule } from './post/post.module';
       inject: [ConfigService],
     }),
     GraphQLModule.forRoot({
+      installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
     }),
     ConfigModule,
     UserModule,
     PostModule,
+    PubsubModule,
   ],
   controllers: [],
   providers: [],

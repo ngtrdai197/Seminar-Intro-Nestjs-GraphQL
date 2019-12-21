@@ -5,20 +5,22 @@ import {
   Query,
   ResolveProperty,
   Parent,
+  Subscription,
 } from '@nestjs/graphql'
 import { User, EditUser } from './user.entity'
 import { IUser } from './interface/user.interface'
 import { UserService } from './user.service'
-import { UseInterceptors } from '@nestjs/common'
 import { Post } from '../post/post.entity'
 import { IPost } from '../post/interfaces/post.schema'
 import { PostService } from '../post/post.service'
+import { PubsubService } from '../pubsub/pubsub.service'
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
     private readonly postService: PostService,
+    private readonly pubsubService: PubsubService,
   ) {}
 
   @Mutation(() => User)
@@ -34,7 +36,11 @@ export class UserResolver {
     @Args('userId') userId: string,
     @Args('editUser') editUser: EditUser,
   ): Promise<IUser> {
-    return await this.userService.editUser(userId, editUser)
+    const edited = await this.userService.editUser(userId, editUser)
+    this.pubsubService.pubsub.publish('editedUser', {
+      subscribeEditeUser: edited,
+    })
+    return edited
   }
 
   @Query(() => [User])
@@ -57,5 +63,14 @@ export class UserResolver {
       _id: { $in: currentUser.posts },
       name: new RegExp(postName, 'i'),
     })
+  }
+
+  @Subscription(() => User, {
+    filter(payload, variables, context) {
+      return payload.subscribeEditeUser.username === variables.username
+    },
+  })
+  subscribeEditeUser(@Args('username') username: string) {
+    return this.pubsubService.editedUser()
   }
 }

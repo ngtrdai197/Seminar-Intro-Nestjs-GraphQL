@@ -25,6 +25,10 @@ type Query {
   fetchUsers: [User!]!
 }
 
+type Subscription {
+  subscribeEditeUser(username: String!): User!
+}
+
 type User {
   _id: ID!
   username: String!

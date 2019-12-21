@@ -30,6 +30,7 @@
     "apollo-server-express": "^2.9.13",
     "class-validator": "^0.11.0",
     "graphql": "^14.5.8",
+    "graphql-subscriptions": "^1.1.0",
     "graphql-tools": "^4.0.6",
     "mongoose": "^5.8.1",
     "reflect-metadata": "^0.1.13",
