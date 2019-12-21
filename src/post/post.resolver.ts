@@ -10,7 +10,7 @@ export class PostResolver {
   @Mutation(() => Post)
   async createNewPost(
     @Args('name') name: string,
-    @Args('content') content?: string,
+    @Args('content') content: string,
   ): Promise<IPost> {
     return await this.postService.create(name, content)
   }
