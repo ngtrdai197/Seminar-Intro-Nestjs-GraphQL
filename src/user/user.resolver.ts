@@ -10,13 +10,11 @@ import { User, EditUser } from './user.entity'
 import { IUser } from './interface/user.interface'
 import { UserService } from './user.service'
 import { UseInterceptors } from '@nestjs/common'
-import { TransformInterceptor } from '../interceptors/transform.interceptor'
 import { Post } from '../post/post.entity'
 import { IPost } from '../post/interfaces/post.schema'
 import { PostService } from '../post/post.service'
 
 @Resolver(() => User)
-@UseInterceptors(TransformInterceptor)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
