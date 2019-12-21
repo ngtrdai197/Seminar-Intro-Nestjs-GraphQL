@@ -8,7 +8,7 @@ import { POST_MODEL } from '../constants'
 @Injectable()
 export class PostService {
   constructor(
-    // @Inject(POST_MODEL) private readonly postModel: Model<IPost>
+    // @Inject(POST_MODEL) private readonly postModel: Model<IPost>,
 
     @InjectModel(POST_MODEL) private readonly postModel: Model<IPost>,
     private readonly userService: UserService,

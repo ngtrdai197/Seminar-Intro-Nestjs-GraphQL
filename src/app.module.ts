@@ -7,7 +7,7 @@ import { DatabaseModule } from './database/database.module'
 import { ConfigModule } from './config/config.module'
 import { ConfigService } from './config/config.service'
 import { PostModule } from './post/post.module'
-import { PubsubModule } from './pubsub/pubsub.module';
+import { PubsubModule } from './pubsub/pubsub.module'
 
 @Module({
   imports: [

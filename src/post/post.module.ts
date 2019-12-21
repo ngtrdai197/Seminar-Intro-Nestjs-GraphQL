@@ -18,7 +18,7 @@ import { postProviders } from './post.providers'
       },
     ]),
     forwardRef(() => UserModule),
-    // DatabaseModule
+    // DatabaseModule,
   ],
   // providers: [PostService, PostResolver, ...postProviders],
   providers: [PostService, PostResolver],
