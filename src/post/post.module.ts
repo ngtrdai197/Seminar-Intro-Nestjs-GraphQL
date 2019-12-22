@@ -20,7 +20,7 @@ import { postProviders } from './post.providers'
     forwardRef(() => UserModule),
     // DatabaseModule,
   ],
-  // providers: [PostService, PostResolver, ...postProviders],
+  // providers: [PostService, PostResolver, ...postProviders], // TODO: provider
   providers: [PostService, PostResolver],
   exports: [PostService],
 })

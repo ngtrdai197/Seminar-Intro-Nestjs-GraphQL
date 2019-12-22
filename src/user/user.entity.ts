@@ -18,7 +18,7 @@ export class User {
 
 // tslint:disable-next-line: max-classes-per-file
 @InputType()
-export class EditUser {
+export class EditUserInput {
   @Field({ nullable: true })
   username?: string
 

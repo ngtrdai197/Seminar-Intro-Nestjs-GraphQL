@@ -19,7 +19,7 @@ import { PubsubModule } from 'src/pubsub/pubsub.module'
     PostModule,
     // DatabaseModule, // TODO: import here
   ],
-  // providers: [UserResolver, UserService, ...userProviders], // TODO: using for provider
+  // providers: [UserResolver, UserService, ...userProviders], // TODO: provider
   providers: [UserResolver, UserService],
   exports: [UserService],
 })

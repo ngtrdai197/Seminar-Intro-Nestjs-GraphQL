@@ -7,7 +7,7 @@ import {
   Parent,
   Subscription,
 } from '@nestjs/graphql'
-import { User, EditUser } from './user.entity'
+import { User, EditUserInput } from './user.entity'
 import { IUser } from './interface/user.interface'
 import { UserService } from './user.service'
 import { Post } from '../post/post.entity'
@@ -34,7 +34,7 @@ export class UserResolver {
   @Mutation(() => User)
   async editUser(
     @Args('userId') userId: string,
-    @Args('editUser') editUser: EditUser,
+    @Args('editUser') editUser: EditUserInput,
   ): Promise<IUser> {
     const edited = await this.userService.editUser(userId, editUser)
     this.pubsubService.pubsub.publish('editedUser', {

@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { IUser } from './interface/user.interface'
 import { CreateUserDto } from './dto/create-user.dto'
-import { EditUser } from './user.entity'
+import { EditUserInput } from './user.entity'
 import { USER_MODEL } from '../constants'
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UserService {
     return await this.userModel.findOne(conditions)
   }
 
-  async editUser(userId: string, editUser: EditUser): Promise<IUser> {
+  async editUser(userId: string, editUser: EditUserInput): Promise<IUser> {
     const user = await this.userModel.findById(userId)
     if (!user) {
       throw new HttpException(

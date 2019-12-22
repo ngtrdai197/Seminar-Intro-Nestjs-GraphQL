@@ -41,6 +41,6 @@ export class ConfigService {
     return +this.envConfig.PORT
   }
   get uriConnectDB(): string {
-    return `mongodb://localhost/nest`
+    return `mongodb://localhost/${this.envConfig.DATABASE_NAME}`
   }
 }

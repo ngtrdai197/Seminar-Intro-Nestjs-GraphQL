@@ -4,18 +4,19 @@ import { MongooseModule } from '@nestjs/mongoose'
 
 import { UserModule } from './user/user.module'
 import { DatabaseModule } from './database/database.module'
-import { ConfigModule } from './config/config.module'
-import { ConfigService } from './config/config.service'
 import { PostModule } from './post/post.module'
 import { PubsubModule } from './pubsub/pubsub.module'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Module({
   imports: [
     // DatabaseModule, // TODO: import here
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.uriConnectDB,
+        uri: configService.get<string>('DB_CONNECTION_STRING'),
+        useNewUrlParser: true,
+        useFindAndModify: true,
+        useUnifiedTopology: true,
       }),
       inject: [ConfigService],
     }),
@@ -23,7 +24,10 @@ import { PubsubModule } from './pubsub/pubsub.module'
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
     }),
-    ConfigModule,
+    ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
+      isGlobal: true,
+    }),
     UserModule,
     PostModule,
     PubsubModule,
