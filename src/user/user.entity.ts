@@ -12,8 +12,11 @@ export class User {
   @Field(type => String)
   fullName: string
 
-  @Field(type => String)
-  address: string
+  @Field(type => String, { nullable: true })
+  address?: string
+
+  @Field(type => [String])
+  postIds: string[]
 }
 
 // tslint:disable-next-line: max-classes-per-file

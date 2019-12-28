@@ -13,9 +13,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
     // DatabaseModule, // TODO: import here
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DB_CONNECTION_STRING'),
+        // uri: configService.get<string>('DB_CONNECTION_STRING'),
+        uri: `mongodb://nest-mongodb:27017/nest`,
         useNewUrlParser: true,
-        useFindAndModify: true,
+        useFindAndModify: false,
         useUnifiedTopology: true,
       }),
       inject: [ConfigService],

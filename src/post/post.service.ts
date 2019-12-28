@@ -20,10 +20,13 @@ export class PostService {
 
   async create(name: string, content?: string): Promise<IPost> {
     const post = await this.postModel.create({ name, content })
-    const user = await this.userService.findById('5dfde25da7a2d0355ef727dd')
-    user.posts.push(post._id)
-    user.set('posts', user.posts)
-    await user.save()
+    await this.userService.update('5e07341f40b8da005acab1a1', {
+      $push: { postIds: post._id },
+    })
     return post
+  }
+
+  async update(id: string, docs: { [key: string]: any }): Promise<IPost> {
+    return await this.postModel.findByIdAndUpdate(id, docs, { new: true })
   }
 }

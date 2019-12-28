@@ -12,8 +12,15 @@ export const UserSchema = new Schema({
   address: {
     type: String,
   },
-  posts: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  postIds: {
+    type: [String],
     default: [],
   },
+})
+
+UserSchema.virtual('posts', {
+  ref: 'Post',
+  localField: 'postIds',
+  foreignField: '_id',
+  justOne: false,
 })

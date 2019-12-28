@@ -14,24 +14,24 @@ export class UserService {
   ) {}
 
   async createUser(newUser: CreateUserDto): Promise<IUser> {
-    const user = new this.userModel(newUser)
-    return await user.save()
+    return await this.userModel.create(newUser)
   }
 
   async findOne(conditions: { [key: string]: any }): Promise<IUser> {
     return await this.userModel.findOne(conditions)
   }
 
-  async editUser(userId: string, editUser: EditUserInput): Promise<IUser> {
-    const user = await this.userModel.findById(userId)
+  async update(id: string, docs: { [key: string]: any }): Promise<IUser> {
+    const user = await this.userModel.findByIdAndUpdate(id, docs, {
+      new: true,
+    })
     if (!user) {
       throw new HttpException(
         { statusCode: 404, message: 'User not found' },
         HttpStatus.NOT_FOUND,
       )
     }
-    user.set(editUser)
-    return await user.save()
+    return user
   }
 
   async fetchUsers(): Promise<IUser[]> {

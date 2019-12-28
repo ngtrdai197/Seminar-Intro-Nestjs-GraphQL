@@ -36,7 +36,7 @@ export class UserResolver {
     @Args('userId') userId: string,
     @Args('editUser') editUser: EditUserInput,
   ): Promise<IUser> {
-    const edited = await this.userService.editUser(userId, editUser)
+    const edited = await this.userService.update(userId, editUser)
     this.pubsubService.pubsub.publish('editedUser', {
       subscribeEditeUser: edited,
     })
@@ -60,7 +60,7 @@ export class UserResolver {
   ): Promise<IPost[]> {
     const currentUser = await this.userService.findById(user._id)
     return await this.postService.find({
-      _id: { $in: currentUser.posts },
+      _id: { $in: currentUser.postIds },
       name: new RegExp(postName, 'i'),
     })
   }

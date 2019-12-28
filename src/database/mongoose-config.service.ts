@@ -9,7 +9,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
     return {
       uri: `${this.configService.get<string>('DB_CONNECTION_STRING')}`,
       useNewUrlParser: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
       useUnifiedTopology: true,
     }
   }
