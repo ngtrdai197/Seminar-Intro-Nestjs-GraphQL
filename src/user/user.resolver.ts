@@ -58,6 +58,9 @@ export class UserResolver {
     })
     postName: string,
   ): Promise<IPost[]> {
+    if (user.postIds && user.postIds.length === 0) {
+      return []
+    }
     const currentUser = await this.userService.findById(user._id)
     return await this.postService.find({
       _id: { $in: currentUser.postIds },

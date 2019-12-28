@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 
+import { UserController } from './user.controller'
 import { UserResolver } from './user.resolver'
 import { UserService } from './user.service'
 import { UserSchema } from './schema/user.schema'
@@ -22,5 +23,6 @@ import { PubsubModule } from 'src/pubsub/pubsub.module'
   // providers: [UserResolver, UserService, ...userProviders], // TODO: provider
   providers: [UserResolver, UserService],
   exports: [UserService],
+  controllers: [UserController],
 })
 export class UserModule {}

@@ -23,4 +23,5 @@ UserSchema.virtual('posts', {
   localField: 'postIds',
   foreignField: '_id',
   justOne: false,
+  options: { sort: { name: -1 } },
 })
