@@ -20,8 +20,7 @@ import { RolesGuard } from './common/guards/roles.guard'
   imports: [
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        // uri: configService.get<string>('DB_CONNECTION_STRING'),
-        uri: `mongodb://nest-mongodb:27017/nest`,
+        uri: `mongodb://localhost:27017/nest`,
         useNewUrlParser: true,
         useFindAndModify: false,
         useUnifiedTopology: true,
@@ -46,6 +45,8 @@ import { RolesGuard } from './common/guards/roles.guard'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('user')
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes('user')
   }
 }

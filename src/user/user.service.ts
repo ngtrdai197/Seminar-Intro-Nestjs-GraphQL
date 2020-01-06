@@ -12,6 +12,10 @@ export class UserService {
   ) {}
 
   async createUser(newUser: CreateUserDto): Promise<IUser> {
+    const exist = await this.findOne({ username: newUser.username })
+    if (exist) {
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST)
+    }
     return await this.userModel.create(newUser)
   }
 
@@ -24,10 +28,7 @@ export class UserService {
       new: true,
     })
     if (!user) {
-      throw new HttpException(
-        { statusCode: 404, message: 'User not found' },
-        HttpStatus.NOT_FOUND,
-      )
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND)
     }
     return user
   }
