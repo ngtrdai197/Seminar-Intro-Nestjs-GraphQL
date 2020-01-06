@@ -5,11 +5,11 @@ import { UserController } from './user.controller'
 import { UserResolver } from './user.resolver'
 import { UserService } from './user.service'
 import { UserSchema } from './schema/user.schema'
-import { DatabaseModule } from '../database/database.module'
 import { userProviders } from './user.providers'
 import { USER_MODEL } from '../constants'
 import { PostModule } from '../post/post.module'
 import { PubsubModule } from 'src/pubsub/pubsub.module'
+import { AuthModule } from 'src/auth/auth.module'
 
 @Module({
   imports: [
@@ -18,9 +18,8 @@ import { PubsubModule } from 'src/pubsub/pubsub.module'
     ]),
     PubsubModule,
     PostModule,
-    // DatabaseModule, // TODO: import here
+    AuthModule,
   ],
-  // providers: [UserResolver, UserService, ...userProviders], // TODO: provider
   providers: [UserResolver, UserService],
   exports: [UserService],
   controllers: [UserController],

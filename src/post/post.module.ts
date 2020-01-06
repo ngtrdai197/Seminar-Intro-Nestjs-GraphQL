@@ -5,8 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { PostSchema } from './schema/post.schema'
 import { UserModule } from 'src/user/user.module'
 import { POST_MODEL } from '../constants'
-import { DatabaseModule } from '../database/database.module'
-import { postProviders } from './post.providers'
 
 @Module({
   imports: [
@@ -18,9 +16,7 @@ import { postProviders } from './post.providers'
       },
     ]),
     forwardRef(() => UserModule),
-    // DatabaseModule,
   ],
-  // providers: [PostService, PostResolver, ...postProviders], // TODO: provider
   providers: [PostService, PostResolver],
   exports: [PostService],
 })

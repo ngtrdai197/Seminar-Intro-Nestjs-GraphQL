@@ -1,15 +1,13 @@
-import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common'
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { IUser } from './interface/user.interface'
 import { CreateUserDto } from './dto/create-user.dto'
-import { EditUserInput } from './user.entity'
 import { USER_MODEL } from '../constants'
 
 @Injectable()
 export class UserService {
   constructor(
-    // @Inject(USER_MODEL) private readonly userModel: Model<IUser>
     @InjectModel(USER_MODEL) private readonly userModel: Model<IUser>,
   ) {}
 

@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql'
 import { Post, EditPost } from './post.entity'
 import { PostService } from './post.service'
 import { IPost } from './interfaces/post.schema'
@@ -21,5 +21,10 @@ export class PostResolver {
     @Args('editPost') edit: EditPost,
   ): Promise<IPost> {
     return await this.postService.update(postId, edit)
+  }
+
+  @Query(() => [Post])
+  async fetchPosts(): Promise<IPost[]> {
+    return await this.postService.find({})
   }
 }

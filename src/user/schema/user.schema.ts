@@ -9,8 +9,16 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   address: {
     type: String,
+  },
+  roles: {
+    type: [String],
+    default: 'user',
   },
   postIds: {
     type: [String],

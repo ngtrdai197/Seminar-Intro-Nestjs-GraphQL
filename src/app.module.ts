@@ -1,16 +1,23 @@
-import { Module } from '@nestjs/common'
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { MongooseModule } from '@nestjs/mongoose'
 
 import { UserModule } from './user/user.module'
-import { DatabaseModule } from './database/database.module'
 import { PostModule } from './post/post.module'
 import { PubsubModule } from './pubsub/pubsub.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { AuthModule } from './auth/auth.module'
+import { LoggerMiddleware } from './common/middlewares/logger.middleware'
+import { APP_GUARD } from '@nestjs/core'
+import { RolesGuard } from './common/guards/roles.guard'
 
 @Module({
   imports: [
-    // DatabaseModule, // TODO: import here
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
         // uri: configService.get<string>('DB_CONNECTION_STRING'),
@@ -32,8 +39,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
     UserModule,
     PostModule,
     PubsubModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('user')
+  }
+}

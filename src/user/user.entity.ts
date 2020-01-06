@@ -10,6 +10,9 @@ export class User {
   username: string
 
   @Field(type => String)
+  password: string
+
+  @Field(type => String)
   fullName: string
 
   @Field(type => String, { nullable: true })
@@ -30,4 +33,7 @@ export class EditUserInput {
 
   @Field({ nullable: true })
   address?: string
+
+  @Field(() => [String], { nullable: true })
+  roles?: string[]
 }

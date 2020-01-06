@@ -12,10 +12,11 @@ input EditUserInput {
   username: String
   fullName: String
   address: String
+  roles: [String!]
 }
 
 type Mutation {
-  createNewUser(fullName: String!, username: String!): User!
+  createNewUser(password: String!, fullName: String!, username: String!): User!
   editUser(editUser: EditUserInput!, userId: String!): User!
   createNewPost(content: String!, name: String!): Post!
   editPost(editPost: EditPost!, postId: String!): Post!
@@ -29,6 +30,7 @@ type Post {
 
 type Query {
   fetchUsers: [User!]!
+  fetchPosts: [Post!]!
 }
 
 type Subscription {
@@ -38,6 +40,7 @@ type Subscription {
 type User {
   _id: ID!
   username: String!
+  password: String!
   fullName: String!
   address: String
   postIds: [String!]!

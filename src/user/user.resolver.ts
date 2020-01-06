@@ -27,8 +27,9 @@ export class UserResolver {
   async createNewUser(
     @Args('username') username: string,
     @Args('fullName') fullName: string,
+    @Args('password') password: string,
   ): Promise<IUser> {
-    return await this.userService.createUser({ fullName, username })
+    return await this.userService.createUser({ fullName, username, password })
   }
 
   @Mutation(() => User)
