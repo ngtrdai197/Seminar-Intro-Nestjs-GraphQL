@@ -9,32 +9,41 @@ import {
   Body,
   Param,
   SetMetadata,
+  HttpStatus,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { IUser } from './interface/user.interface'
 import { Request } from 'express'
 import { AuthGuard } from '@nestjs/passport'
-import { ValidateParamsMongoId } from '../common/pipes/validation-mongo-id.pipe'
+import { ValidateParamsMongoId } from '@/common/pipes/validation-mongo-id.pipe'
 import { EditUserInput } from './user.entity'
-import { CurrentUser } from 'src/common/decorators/current-user.decorator'
-import { RolesGuard } from 'src/common/guards/roles.guard'
+import { CurrentUser } from '@/common/decorators/current-user.decorator'
+import { RolesGuard } from '@/common/guards/roles.guard'
+import { Roles } from '@/common/decorators/roles.decorator'
+import { ValidationPipe } from '@/common/pipes/validation.pipe'
+import { EditUserDto } from './dto/edit-user.dto'
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('fetch')
-  @UseGuards(AuthGuard('jwt'))
-  @SetMetadata('roles', ['admin'])
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @SetMetadata('roles', ['admin', 'user'])
   async fetchUsers(@CurrentUser() user: IUser | any): Promise<IUser[]> {
     return await this.userService.fetchUsers()
   }
 
-  @Put('update/:id')
+  @Put('update/:userId')
+  @UseGuards(AuthGuard('jwt'))
   async updateUser(
-    @Body() body: EditUserInput,
-    @Param('id', new ValidateParamsMongoId()) id: string,
+    @CurrentUser() user: IUser,
+    @Param('userId', new ValidationPipe()) id: string,
+    @Body(new ValidationPipe()) body: EditUserDto,
   ) {
+    if (id !== user.id) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
+    }
     return await this.userService.update(id, body)
   }
 

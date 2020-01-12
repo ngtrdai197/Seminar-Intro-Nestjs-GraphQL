@@ -10,10 +10,10 @@ import {
 import { User, EditUserInput } from './user.entity'
 import { IUser } from './interface/user.interface'
 import { UserService } from './user.service'
-import { Post } from '../post/post.entity'
-import { IPost } from '../post/interfaces/post.schema'
-import { PostService } from '../post/post.service'
-import { PubsubService } from '../pubsub/pubsub.service'
+import { Post } from '@/post/post.entity'
+import { IPost } from '@/post/interfaces/post.schema'
+import { PostService } from '@/post/post.service'
+import { PubsubService } from '@/pubsub/pubsub.service'
 
 @Resolver(() => User)
 export class UserResolver {

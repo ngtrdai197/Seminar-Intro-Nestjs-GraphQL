@@ -13,20 +13,13 @@ import { PubsubModule } from './pubsub/pubsub.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { LoggerMiddleware } from './common/middlewares/logger.middleware'
-import { APP_GUARD } from '@nestjs/core'
-import { RolesGuard } from './common/guards/roles.guard'
 
 @Module({
   imports: [
-    MongooseModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => ({
-        // uri: configService.get<string>('DB_CONNECTION_STRING'),
-        uri: `mongodb://nest-mongodb:27017/nest`,
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-      }),
-      inject: [ConfigService],
+    MongooseModule.forRoot(`mongodb://nest-mongodb/nest`, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
     }),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,

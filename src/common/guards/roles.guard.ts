@@ -1,12 +1,7 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common'
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { IUser } from 'src/user/interface/user.interface'
+import { ForbiddenException } from '../exceptions/forbidden.exception'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -23,6 +18,6 @@ export class RolesGuard implements CanActivate {
     if (user && user.roles && hasRole()) {
       return true
     }
-    throw new HttpException('You do not have permission', HttpStatus.FORBIDDEN)
+    throw new ForbiddenException()
   }
 }
