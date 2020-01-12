@@ -1,9 +1,8 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
-import { AllExceptionsFilter } from './common/filter/all-exceptions.filter'
+import { AllExceptionsFilter, HttpGqlExceptionFilter } from './common/filter'
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
-import { HttpExceptionFilter } from './common/filter/gql-exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -11,7 +10,7 @@ async function bootstrap() {
   app.enableCors()
 
   app.setGlobalPrefix('/v1/api')
-  app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter())
+  app.useGlobalFilters(new HttpGqlExceptionFilter(), new AllExceptionsFilter())
   app.useGlobalInterceptors(new LoggingInterceptor())
 
   const configService = app.get(ConfigService)

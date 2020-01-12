@@ -18,7 +18,6 @@ export class PostResolver {
     @Args('name') name: string,
     @Args('content') content: string,
   ): Promise<IPost> {
-    console.log('user', user)
     const { id: createdBy } = user
     return await this.postService.create({ createdBy, name, content })
   }
