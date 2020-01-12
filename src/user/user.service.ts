@@ -1,9 +1,13 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common'
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { IUser } from './interface/user.interface'
 import { CreateUserDto } from './dto/create-user.dto'
-import { USER_MODEL } from '../constants'
+import { USER_MODEL } from '@/common/constants'
 
 @Injectable()
 export class UserService {
@@ -11,16 +15,12 @@ export class UserService {
     @InjectModel(USER_MODEL) private readonly userModel: Model<IUser>,
   ) {}
 
-  async createUser(newUser: CreateUserDto): Promise<IUser> {
-    const exist = await this.findOne({ username: newUser.username })
-    if (exist) {
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST)
-    }
-    return await this.userModel.create(newUser)
-  }
-
   async findOne(conditions: { [key: string]: any }): Promise<IUser> {
     return await this.userModel.findOne(conditions)
+  }
+
+  async create(newUser: CreateUserDto): Promise<IUser> {
+    return await this.userModel.create(newUser)
   }
 
   async update(id: string, docs: { [key: string]: any }): Promise<IUser> {
@@ -28,7 +28,7 @@ export class UserService {
       new: true,
     })
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+      throw new NotFoundException('User not found')
     }
     return user
   }

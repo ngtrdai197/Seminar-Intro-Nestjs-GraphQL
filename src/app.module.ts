@@ -13,7 +13,6 @@ import { PubsubModule } from './pubsub/pubsub.module'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { LoggerMiddleware } from './common/middlewares/logger.middleware'
-
 @Module({
   imports: [
     MongooseModule.forRoot(`mongodb://nest-mongodb/nest`, {
@@ -24,6 +23,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware'
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
+      context: ({ req }) => ({ req }),
     }),
     ConfigModule.forRoot({
       envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,

@@ -1,15 +1,13 @@
-import { Injectable, Inject, forwardRef } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { IPost } from './interfaces/post.schema'
-import { UserService } from '../user/user.service'
-import { POST_MODEL } from '../constants'
+import { IPost } from './interfaces/post.interface'
+import { UserService } from '@/user/user.service'
+import { POST_MODEL } from '@/common/constants'
 
 @Injectable()
 export class PostService {
   constructor(
-    // @Inject(POST_MODEL) private readonly postModel: Model<IPost>,
-
     @InjectModel(POST_MODEL) private readonly postModel: Model<IPost>,
     private readonly userService: UserService,
   ) {}
@@ -18,10 +16,18 @@ export class PostService {
     return await this.postModel.find(conditions)
   }
 
-  async create(name: string, content?: string): Promise<IPost> {
+  async create({
+    createdBy,
+    name,
+    content,
+  }: {
+    createdBy: string
+    name: string
+    content?: string
+  }): Promise<IPost> {
     const post = await this.postModel.create({ name, content })
-    await this.userService.update('5e07341f40b8da005acab1a1', {
-      $push: { postIds: post._id },
+    await this.userService.update(createdBy, {
+      $push: { postIds: post.id },
     })
     return post
   }

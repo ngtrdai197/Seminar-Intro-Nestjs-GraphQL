@@ -3,13 +3,11 @@ import {
   Injectable,
   ArgumentMetadata,
   BadRequestException,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common'
 import { validate } from 'class-validator'
 import { plainToClass } from 'class-transformer'
 import { EditUserDto } from '@/user/dto/edit-user.dto'
-import * as mongoose from 'mongoose'
+import { Types } from 'mongoose'
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -25,8 +23,8 @@ export class ValidationPipe implements PipeTransform<any> {
       }
     }
     if (type === 'param') {
-      if (!mongoose.Types.ObjectId.isValid(value)) {
-        throw new HttpException('Not an ObjectId', HttpStatus.BAD_REQUEST)
+      if (!Types.ObjectId.isValid(value)) {
+        throw new BadRequestException('Not an ObjectId')
       }
     }
     return value

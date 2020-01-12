@@ -5,11 +5,9 @@ import { UserController } from './user.controller'
 import { UserResolver } from './user.resolver'
 import { UserService } from './user.service'
 import { UserSchema } from './schema/user.schema'
-import { userProviders } from './user.providers'
-import { USER_MODEL } from '@/constants'
+import { USER_MODEL } from '@/common/constants'
 import { PostModule } from '@/post/post.module'
 import { PubsubModule } from '@/pubsub/pubsub.module'
-import { AuthModule } from '@/auth/auth.module'
 
 @Module({
   imports: [
@@ -18,7 +16,6 @@ import { AuthModule } from '@/auth/auth.module'
     ]),
     PubsubModule,
     PostModule,
-    AuthModule,
   ],
   providers: [UserResolver, UserService],
   exports: [UserService],

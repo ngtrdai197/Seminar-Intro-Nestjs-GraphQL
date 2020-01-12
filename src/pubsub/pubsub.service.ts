@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common'
 import { PubSub } from 'graphql-subscriptions'
-import { PUB_SUB } from '../constants'
+import { PUB_SUB } from '@/common/constants'
 
 @Injectable()
 export class PubsubService {

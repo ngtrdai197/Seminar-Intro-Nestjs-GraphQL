@@ -3,7 +3,7 @@ version: '3.5'
 services:
   nest-server:
     container_name: nest-server
-    image: nest-server/nest:v1
+    image: nest-server/nest
     build:
       context: ./
       dockerfile: Dockerfile

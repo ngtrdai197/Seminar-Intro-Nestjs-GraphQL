@@ -3,8 +3,9 @@ import { PostService } from './post.service'
 import { PostResolver } from './post.resolver'
 import { MongooseModule } from '@nestjs/mongoose'
 import { PostSchema } from './schema/post.schema'
-import { UserModule } from 'src/user/user.module'
-import { POST_MODEL } from '../constants'
+import { UserModule } from '@/user/user.module'
+import { POST_MODEL } from '@/common/constants'
+import { PostController } from './post.controller'
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { POST_MODEL } from '../constants'
     ]),
     forwardRef(() => UserModule),
   ],
+  controllers: [PostController],
   providers: [PostService, PostResolver],
   exports: [PostService],
 })

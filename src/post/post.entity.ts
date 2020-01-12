@@ -3,8 +3,7 @@ import { ObjectType, Field, ID, InputType } from 'type-graphql'
 @ObjectType()
 export class Post {
   @Field(type => ID)
-  // tslint:disable-next-line: variable-name
-  _id: string
+  id: string
 
   @Field(type => String)
   name: string

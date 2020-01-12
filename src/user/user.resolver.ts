@@ -11,7 +11,7 @@ import { User, EditUserInput } from './user.entity'
 import { IUser } from './interface/user.interface'
 import { UserService } from './user.service'
 import { Post } from '@/post/post.entity'
-import { IPost } from '@/post/interfaces/post.schema'
+import { IPost } from '@/post/interfaces/post.interface'
 import { PostService } from '@/post/post.service'
 import { PubsubService } from '@/pubsub/pubsub.service'
 
@@ -22,15 +22,6 @@ export class UserResolver {
     private readonly postService: PostService,
     private readonly pubsubService: PubsubService,
   ) {}
-
-  @Mutation(() => User)
-  async createNewUser(
-    @Args('username') username: string,
-    @Args('fullName') fullName: string,
-    @Args('password') password: string,
-  ): Promise<IUser> {
-    return await this.userService.createUser({ fullName, username, password })
-  }
 
   @Mutation(() => User)
   async editUser(
@@ -49,7 +40,7 @@ export class UserResolver {
     return await this.userService.fetchUsers()
   }
 
-  @ResolveProperty(() => [Post])
+  @ResolveProperty(() => [Post], { nullable: true })
   async posts(
     @Parent() user: User,
     @Args({
@@ -62,9 +53,8 @@ export class UserResolver {
     if (user.postIds && user.postIds.length === 0) {
       return []
     }
-    const currentUser = await this.userService.findById(user._id)
     return await this.postService.find({
-      _id: { $in: currentUser.postIds },
+      _id: { $in: user.postIds },
       name: new RegExp(postName, 'i'),
     })
   }

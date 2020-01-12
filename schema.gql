@@ -3,6 +3,14 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateNewUserInput {
+  id: ID!
+  username: String!
+  fullName: String!
+  password: String!
+  address: String
+}
+
 input EditPost {
   name: String
   content: String
@@ -10,20 +18,28 @@ input EditPost {
 
 input EditUserInput {
   username: String
-  fullName: String
   address: String
+  fullName: String
+  password: String
+  postIds: [String!]
   roles: [String!]
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 type Mutation {
-  createNewUser(password: String!, fullName: String!, username: String!): User!
   editUser(editUser: EditUserInput!, userId: String!): User!
   createNewPost(content: String!, name: String!): Post!
   editPost(editPost: EditPost!, postId: String!): Post!
+  createNewUser(newUser: CreateNewUserInput!): User!
+  login(password: String!, username: String!): JSON!
 }
 
 type Post {
-  _id: ID!
+  id: ID!
   name: String!
   content: String!
 }
@@ -38,11 +54,11 @@ type Subscription {
 }
 
 type User {
-  _id: ID!
+  id: ID!
   username: String!
   password: String!
   fullName: String!
   address: String
-  postIds: [String!]!
-  posts(postName: String): [Post!]!
+  postIds: [String!]
+  posts(postName: String): [Post!]
 }
