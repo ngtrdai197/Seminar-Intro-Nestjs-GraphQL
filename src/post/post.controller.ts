@@ -8,9 +8,8 @@ export class PostController {
 
   @Get('fetch')
   async fetchPost(@Query() query: { [key: string]: any }) {
-    const { content, name } = query
-    query = validateQuery(query)
-    return await this.postService.find({
+    const { content, name } = validateQuery(query)
+    const conditions = {
       $or: [
         {
           content: content ? new RegExp(content, 'i') : null,
@@ -19,6 +18,7 @@ export class PostController {
           name: name ? new RegExp(name, 'i') : null,
         },
       ],
-    })
+    }
+    return await this.postService.find(conditions)
   }
 }
