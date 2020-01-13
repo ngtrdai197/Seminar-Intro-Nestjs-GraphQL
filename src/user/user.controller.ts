@@ -28,7 +28,9 @@ export class UserController {
   @Get('fetch')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @SetMetadata('roles', ['admin', 'user'])
-  async fetchUsers(@CurrentUser() user: IUser | any): Promise<IUser[]> {
+  async fetchUsers(
+    @CurrentUser() user: IUser | { [key: string]: any },
+  ): Promise<IUser[]> {
     return await this.userService.fetchUsers()
   }
 
