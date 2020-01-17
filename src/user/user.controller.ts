@@ -35,7 +35,8 @@ export class UserController {
   }
 
   @Put('update/:userId')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(['admin', 'user'])
   async updateUser(
     @CurrentUser() user: IUser,
     @Param('userId', new ValidationPipe()) id: string,
