@@ -1,16 +1,11 @@
-import {
-  Module,
-  NestModule,
-  MiddlewareConsumer,
-  RequestMethod,
-} from '@nestjs/common'
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { MongooseModule } from '@nestjs/mongoose'
 
 import { UserModule } from './user/user.module'
 import { PostModule } from './post/post.module'
 import { PubsubModule } from './pubsub/pubsub.module'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { LoggerMiddleware } from './common/middlewares/logger.middleware'
 @Module({

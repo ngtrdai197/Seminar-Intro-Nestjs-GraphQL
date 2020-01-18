@@ -1,11 +1,13 @@
 import { Module, forwardRef } from '@nestjs/common'
 import { PostService } from './post.service'
-import { PostResolver } from './post.resolver'
+import { MutationPostResolver, QueryPostResolver } from './graphql'
 import { MongooseModule } from '@nestjs/mongoose'
 import { PostSchema } from './schema/post.schema'
 import { UserModule } from '@/user/user.module'
 import { POST_MODEL } from '@/common/constants'
 import { PostController } from './post.controller'
+
+const resolvers = [MutationPostResolver, QueryPostResolver]
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { PostController } from './post.controller'
     forwardRef(() => UserModule),
   ],
   controllers: [PostController],
-  providers: [PostService, PostResolver],
+  providers: [PostService, ...resolvers],
   exports: [PostService],
 })
 export class PostModule {}

@@ -32,7 +32,7 @@ scalar JSON
 
 type Mutation {
   editUser(editUser: EditUserInput!, userId: String!): User!
-  createNewPost(content: String!, name: String!): Post!
+  createNewPost(content: String, name: String!): Post!
   editPost(editPost: EditPost!, postId: String!): Post!
   createNewUser(newUser: CreateNewUserInput!): User!
   login(password: String!, username: String!): JSON!

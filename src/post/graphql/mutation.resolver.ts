@@ -1,14 +1,14 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql'
-import { Post, EditPost } from './post.entity'
-import { PostService } from './post.service'
-import { IPost } from './interfaces/post.interface'
-import { GqlUser } from '@/common/decorators/current-user.decorator'
-import { IUser } from '@/user/interface/user.interface'
+import { Resolver, Mutation, Args } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
 import { GqlAuthGuard } from '@/common/guards/gql.guard'
+import { GqlUser } from '@/common/decorators/current-user.decorator'
+import { IUser } from '@/user/interface/user.interface'
+import { IPost } from '../interfaces/post.interface'
+import { EditPost, Post } from '../post.entity'
+import { PostService } from '../post.service'
 
-@Resolver(() => Post)
-export class PostResolver {
+@Resolver()
+export class MutationPostResolver {
   constructor(private readonly postService: PostService) {}
 
   @Mutation(() => Post)
@@ -16,7 +16,12 @@ export class PostResolver {
   async createNewPost(
     @GqlUser() user: IUser,
     @Args('name') name: string,
-    @Args('content') content: string,
+    @Args({
+      name: 'content',
+      type: () => String,
+      nullable: true,
+    })
+    content: string,
   ): Promise<IPost> {
     const { id: createdBy } = user
     return await this.postService.create({ createdBy, name, content })
@@ -28,10 +33,5 @@ export class PostResolver {
     @Args('editPost') edit: EditPost,
   ): Promise<IPost> {
     return await this.postService.update(postId, edit)
-  }
-
-  @Query(() => [Post])
-  async fetchPosts(): Promise<IPost[]> {
-    return await this.postService.find()
   }
 }

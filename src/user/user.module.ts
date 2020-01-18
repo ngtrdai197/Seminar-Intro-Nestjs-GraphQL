@@ -2,12 +2,24 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 
 import { UserController } from './user.controller'
-import { UserResolver } from './user.resolver'
+import {
+  MutationUserResolver,
+  PropertyUserResovler,
+  QueryUserResolver,
+  SubscriptionUserResolver,
+} from './graphql'
 import { UserService } from './user.service'
 import { UserSchema } from './schema/user.schema'
 import { USER_MODEL } from '@/common/constants'
 import { PostModule } from '@/post/post.module'
 import { PubsubModule } from '@/pubsub/pubsub.module'
+
+const resolvers = [
+  MutationUserResolver,
+  PropertyUserResovler,
+  QueryUserResolver,
+  SubscriptionUserResolver,
+]
 
 @Module({
   imports: [
@@ -17,7 +29,7 @@ import { PubsubModule } from '@/pubsub/pubsub.module'
     PubsubModule,
     PostModule,
   ],
-  providers: [UserResolver, UserService],
+  providers: [...resolvers, UserService],
   exports: [UserService],
   controllers: [UserController],
 })
