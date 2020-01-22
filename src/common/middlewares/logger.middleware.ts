@@ -9,7 +9,6 @@ import { Request, Response, NextFunction } from 'express'
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log('Logger Middleware Request...')
     if (!req.headers.authorization && !req.body.authorization) {
       throw new HttpException('Missing header', HttpStatus.UNAUTHORIZED)
     }

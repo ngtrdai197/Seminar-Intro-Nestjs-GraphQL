@@ -7,7 +7,6 @@ import { ForbiddenException } from '@/common/exceptions/forbidden.exception'
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
   canActivate(context: ExecutionContext): boolean {
-    console.log(`RolesGuard`)
     const roles = this.reflector.get<string[]>('roles', context.getHandler())
     if (!roles) {
       return false
