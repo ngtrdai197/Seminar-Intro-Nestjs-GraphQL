@@ -5,6 +5,10 @@ export class CreateBookDto {
   @IsNotEmpty()
   name: string
 
+  @IsString()
+  @IsNotEmpty()
+  author: string
+
   @IsArray()
   @IsNotEmpty()
   genres: string[]

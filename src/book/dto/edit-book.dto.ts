@@ -17,4 +17,8 @@ export class EditBookDto implements Partial<IBook> {
   @IsOptional()
   @IsNumber()
   price?: number
+
+  @IsOptional()
+  @IsString()
+  author?: string
 }
