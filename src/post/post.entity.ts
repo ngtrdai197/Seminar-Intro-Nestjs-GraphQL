@@ -2,22 +2,22 @@ import { ObjectType, Field, ID, InputType } from 'type-graphql'
 
 @ObjectType()
 export class Post {
-  @Field(type => ID)
+  @Field(() => ID)
   id: string
 
-  @Field(type => String)
+  @Field(() => String)
   name: string
 
-  @Field(type => String)
+  @Field(() => String)
   content: string
 }
 
 // tslint:disable-next-line: max-classes-per-file
 @InputType()
 export class EditPost {
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   name?: string
 
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   content?: string
 }

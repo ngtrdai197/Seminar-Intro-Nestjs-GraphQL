@@ -9,6 +9,6 @@ export class QueryUserResolver {
 
   @Query(() => [User])
   async fetchUsers(): Promise<IUser[]> {
-    return await this.userService.fetchUsers()
+    return await this.userService.find()
   }
 }

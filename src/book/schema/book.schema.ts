@@ -21,6 +21,7 @@ export const BookSchema = new Schema(
       type: String,
       required: true,
     },
+    createdById: { type: String, required: true },
   },
   {
     toJSON: {
@@ -31,3 +32,9 @@ export const BookSchema = new Schema(
     },
   },
 )
+BookSchema.virtual('createdBy', {
+  ref: 'User',
+  localField: 'createdById',
+  foreignField: '_id',
+  justOne: true,
+})

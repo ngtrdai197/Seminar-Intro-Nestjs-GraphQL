@@ -1,19 +1,16 @@
 import {
   Controller,
   Get,
-  Req,
   UseGuards,
   Delete,
   HttpException,
   Put,
   Body,
   Param,
-  SetMetadata,
   HttpStatus,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { IUser } from './interface/user.interface'
-import { Request } from 'express'
 import { AuthGuard } from '@nestjs/passport'
 import { CurrentUser } from '@/common/decorators/current-user.decorator'
 import { RolesGuard } from '@/common/guards/roles.guard'
@@ -27,11 +24,11 @@ export class UserController {
 
   @Get('fetch')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @SetMetadata('roles', ['admin', 'user'])
+  @Roles(['admin, user'])
   async fetchUsers(
     @CurrentUser() user: IUser | { [key: string]: any },
   ): Promise<IUser[]> {
-    return await this.userService.fetchUsers()
+    return await this.userService.find()
   }
 
   @Put('update/:userId')
@@ -45,16 +42,18 @@ export class UserController {
     if (id !== user.id) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
     }
-    return await this.userService.update(id, body)
+    return await this.userService.findByIdAndUpdate(id, body)
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('remove')
-  async removeUser(@Req() req: Request): Promise<IUser[]> {
-    const result = await this.userService.fetchUsers()
-    if (result) {
-      throw new HttpException('test dadas error', 404)
+  @Delete('remove/:userId')
+  async removeUser(
+    @Param('userId', new ValidationPipe()) userId: string,
+  ): Promise<boolean> {
+    const exist = await this.userService.findOne({ postIds: { $gte: 1 } })
+    if (exist) {
+      return await this.userService.delete({ _id: userId })
     }
-    return result
+    return false
   }
 }

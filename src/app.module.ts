@@ -7,7 +7,6 @@ import { PostModule } from './post/post.module'
 import { PubsubModule } from './pubsub/pubsub.module'
 import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
-import { LoggerMiddleware } from './common/middlewares/logger.middleware'
 import { BookModule } from './book/book.module'
 @Module({
   imports: [
@@ -36,6 +35,6 @@ import { BookModule } from './book/book.module'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('user')
+    // consumer.apply(LoggerMiddleware).forRoutes('user')
   }
 }

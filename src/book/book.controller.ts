@@ -1,8 +1,19 @@
-import { Controller, Get, Put, Param, Body, Post } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Put,
+  Param,
+  Body,
+  Post,
+  UseGuards,
+} from '@nestjs/common'
 import { BookService } from './book.service'
 import { IBook } from './interface/book.interface'
 import { EditBookDto } from './dto/edit-book.dto'
 import { CreateBookDto } from './dto/create-book.dto'
+import { AuthGuard } from '@nestjs/passport'
+import { CurrentUser } from '@/common/decorators/current-user.decorator'
+import { IUser } from '@/user/interface/user.interface'
 
 @Controller('book')
 export class BookController {
@@ -10,7 +21,7 @@ export class BookController {
 
   @Get('')
   async fetchBooks(): Promise<IBook[]> {
-    return await this.bookService.getBooks({})
+    return await this.bookService.find()
   }
 
   @Put('update/:bookId')
@@ -18,11 +29,18 @@ export class BookController {
     @Param('bookId') bookId: string,
     @Body() editBookDto: EditBookDto,
   ): Promise<IBook> {
-    return await this.bookService.update(bookId, editBookDto)
+    return await this.bookService.findByIdAndUpdate(bookId, editBookDto, {
+      new: true,
+    })
   }
 
   @Post('')
-  async createBook(@Body() newBookDto: CreateBookDto): Promise<IBook> {
+  @UseGuards(AuthGuard('jwt'))
+  async createBook(
+    @CurrentUser() user: IUser,
+    @Body() newBookDto: CreateBookDto,
+  ): Promise<IBook> {
+    newBookDto.createdById = user.id
     return await this.bookService.create(newBookDto)
   }
 }

@@ -6,10 +6,14 @@ import { IUser } from '@/user/interface/user.interface'
 import { IPost } from '../interfaces/post.interface'
 import { EditPost, Post } from '../post.entity'
 import { PostService } from '../post.service'
+import { UserService } from '@/user/user.service'
 
 @Resolver()
 export class MutationPostResolver {
-  constructor(private readonly postService: PostService) {}
+  constructor(
+    private readonly postService: PostService,
+    private readonly userService: UserService,
+  ) {}
 
   @Mutation(() => Post)
   @UseGuards(GqlAuthGuard)
@@ -24,7 +28,15 @@ export class MutationPostResolver {
     content: string,
   ): Promise<IPost> {
     const { id: createdBy } = user
-    return await this.postService.create({ createdBy, name, content })
+    const post = await this.postService.create({ name, content })
+    await this.userService.findByIdAndUpdate(
+      createdBy,
+      {
+        $push: { postIds: post.id },
+      },
+      { new: true },
+    )
+    return post
   }
 
   @Mutation(() => Post)
@@ -32,6 +44,6 @@ export class MutationPostResolver {
     @Args('postId') postId: string,
     @Args('editPost') edit: EditPost,
   ): Promise<IPost> {
-    return await this.postService.update(postId, edit)
+    return await this.postService.findByIdAndUpdate(postId, edit)
   }
 }

@@ -10,7 +10,10 @@ import { Request, Response, NextFunction } from 'express'
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     if (!req.headers.authorization && !req.body.authorization) {
-      throw new HttpException('Missing header', HttpStatus.UNAUTHORIZED)
+      throw new HttpException(
+        'Missing authorization field',
+        HttpStatus.UNAUTHORIZED,
+      )
     }
     next()
   }

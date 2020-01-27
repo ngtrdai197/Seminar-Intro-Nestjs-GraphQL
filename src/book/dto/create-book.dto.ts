@@ -17,6 +17,10 @@ export class CreateBookDto {
   @IsNotEmpty()
   description: string
 
+  @IsString()
+  @IsNotEmpty()
+  createdById: string
+
   @IsNumber()
   price?: number
 }

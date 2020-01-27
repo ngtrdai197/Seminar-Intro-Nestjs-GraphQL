@@ -16,7 +16,9 @@ export class MutationUserResolver {
     @Args('userId') userId: string,
     @Args('editUser') editUser: EditUserInput,
   ): Promise<IUser> {
-    const edited = await this.userService.update(userId, editUser)
+    const edited = await this.userService.findByIdAndUpdate(userId, editUser, {
+      new: true,
+    })
     this.pubsubService.pubsub.publish('editedUser', {
       subscribeEditeUser: edited,
     })

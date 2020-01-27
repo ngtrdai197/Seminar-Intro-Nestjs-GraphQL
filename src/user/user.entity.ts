@@ -2,41 +2,41 @@ import { ObjectType, Field, ID, InputType } from 'type-graphql'
 
 @ObjectType()
 export class User {
-  @Field(type => ID)
+  @Field(() => ID)
   id: string
 
-  @Field(type => String)
+  @Field(() => String)
   username: string
 
-  @Field(type => String)
+  @Field(() => String)
   password: string
 
-  @Field(type => String)
+  @Field(() => String)
   fullName: string
 
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   address: string
 
-  @Field(type => [String], { nullable: true })
+  @Field(() => [String], { nullable: true })
   postIds: string[]
 }
 
 // tslint:disable-next-line: max-classes-per-file
 @InputType()
 export class EditUserInput implements Partial<User> {
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   username?: string
 
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   address?: string
 
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   fullName?: string
 
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   password?: string
 
-  @Field(type => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   postIds?: string[]
 
   @Field(() => [String], { nullable: true })
