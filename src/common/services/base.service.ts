@@ -1,4 +1,4 @@
-import { Model, Document } from 'mongoose'
+import { Model, Document, QueryFindOneAndUpdateOptions } from 'mongoose'
 
 export abstract class BaseService<T extends Document> {
   NOT_FOUND_ERROR = 'Record does not exists'
@@ -19,7 +19,7 @@ export abstract class BaseService<T extends Document> {
   async findOneAndUpdate(
     conditions: { [key: string]: any },
     doc: { [key: string]: any },
-    options: { [key: string]: any },
+    options: QueryFindOneAndUpdateOptions,
   ): Promise<T> {
     return this.model.findOneAndUpdate(conditions, doc, options)
   }
@@ -27,7 +27,7 @@ export abstract class BaseService<T extends Document> {
   async findByIdAndUpdate(
     id: string,
     doc: { [key: string]: any },
-    options?: { [key: string]: any },
+    options?: QueryFindOneAndUpdateOptions,
   ): Promise<T> {
     return this.model.findByIdAndUpdate(id, doc, options)
   }

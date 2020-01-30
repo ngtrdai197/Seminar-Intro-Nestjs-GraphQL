@@ -7,6 +7,7 @@ import { BaseService } from '@/common/services/base.service'
 
 @Injectable()
 export class BookService extends BaseService<IBook> {
+  NOT_FOUND_ERROR = 'Book does not exists'
   constructor(
     @InjectModel(BOOK_MODEL) private readonly bookModel: Model<IBook, {}>,
   ) {

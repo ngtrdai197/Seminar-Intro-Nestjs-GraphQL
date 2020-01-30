@@ -7,6 +7,7 @@ import { BaseService } from '@/common/services/base.service'
 
 @Injectable()
 export class PostService extends BaseService<IPost> {
+  NOT_FOUND_ERROR = 'Post does not exists'
   constructor(
     @InjectModel(POST_MODEL) private readonly postModel: Model<IPost>,
   ) {

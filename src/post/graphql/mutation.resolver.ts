@@ -44,6 +44,6 @@ export class MutationPostResolver {
     @Args('postId') postId: string,
     @Args('editPost') edit: EditPost,
   ): Promise<IPost> {
-    return await this.postService.findByIdAndUpdate(postId, edit)
+    return await this.postService.findByIdAndUpdate(postId, edit, { new: true })
   }
 }

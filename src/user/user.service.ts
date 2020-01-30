@@ -7,6 +7,7 @@ import { BaseService } from '@/common/services/base.service'
 
 @Injectable()
 export class UserService extends BaseService<IUser> {
+  NOT_FOUND_ERROR = 'User does not exists'
   constructor(
     @InjectModel(USER_MODEL) private readonly userModel: Model<IUser>,
   ) {

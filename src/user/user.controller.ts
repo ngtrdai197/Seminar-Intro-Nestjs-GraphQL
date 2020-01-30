@@ -42,7 +42,7 @@ export class UserController {
     if (id !== user.id) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
     }
-    return await this.userService.findByIdAndUpdate(id, body)
+    return await this.userService.findByIdAndUpdate(id, body, { new: true })
   }
 
   @UseGuards(AuthGuard('jwt'))
