@@ -4,7 +4,6 @@
 # -----------------------------------------------
 
 input CreateNewUserInput {
-  id: ID!
   username: String!
   fullName: String!
   password: String!
@@ -47,6 +46,7 @@ type Post {
 type Query {
   fetchUsers: [User!]!
   fetchPosts: [Post!]!
+  me: User!
 }
 
 type Subscription {

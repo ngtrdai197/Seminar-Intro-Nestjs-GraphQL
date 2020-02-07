@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors()
 
   app.setGlobalPrefix('/v1/api')
-  app.useGlobalFilters(new HttpGqlExceptionFilter(), new AllExceptionsFilter())
+  // app.useGlobalFilters(new HttpGqlExceptionFilter(), new AllExceptionsFilter())
   app.useGlobalInterceptors(new LoggingInterceptor())
 
   const configService = app.get(ConfigService)
