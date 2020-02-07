@@ -4,7 +4,7 @@ import {
   HttpStatus,
   BadRequestException,
 } from '@nestjs/common'
-import { UserService } from 'src/user/user.service'
+import { UserService } from '@/user/user.service'
 import { IUser } from '@/user/interface/user.interface'
 import { LoginDto } from './dto/login.dto'
 import { JwtService } from '@nestjs/jwt'
