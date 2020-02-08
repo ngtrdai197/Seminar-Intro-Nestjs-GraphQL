@@ -8,12 +8,11 @@ import { PubsubModule } from './pubsub/pubsub.module'
 import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { BookModule } from './book/book.module'
+import { MongooseConfigService } from './common/services/mongoose.service'
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://localhost/book-store`, {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
+    MongooseModule.forRootAsync({
+      useClass: MongooseConfigService,
     }),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
