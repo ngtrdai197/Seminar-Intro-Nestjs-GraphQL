@@ -9,6 +9,8 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { BookModule } from './book/book.module'
 import { MongooseConfigService } from './common/services/mongoose.service'
+import { ConversationModule } from './conversation/conversation.module';
+import { MessageModule } from './message/message.module';
 @Module({
   imports: [
     MongooseModule.forRootAsync({
@@ -28,6 +30,8 @@ import { MongooseConfigService } from './common/services/mongoose.service'
     PubsubModule,
     AuthModule,
     BookModule,
+    ConversationModule,
+    MessageModule,
   ],
   controllers: [],
   providers: [],

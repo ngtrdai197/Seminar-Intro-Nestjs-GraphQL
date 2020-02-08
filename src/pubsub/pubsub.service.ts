@@ -13,4 +13,8 @@ export class PubsubService {
   editedUser() {
     return this.pubSub.asyncIterator('editedUser')
   }
+
+  conversationChat(conversationId: string) {
+    return this.pubSub.asyncIterator(`conversation.${conversationId}`)
+  }
 }

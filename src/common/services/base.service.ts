@@ -45,6 +45,10 @@ export abstract class BaseService<T extends Document> {
     return this.model.findOne(conditions)
   }
 
+  async findById(id: string): Promise<T> {
+    return this.model.findById(id)
+  }
+
   async delete(conditions: { [key: string]: any }): Promise<boolean> {
     const result = await this.model.deleteOne(conditions)
     return result.ok === 1 ? true : false
@@ -53,5 +57,23 @@ export abstract class BaseService<T extends Document> {
   async deleteMany(conditions: { [key: string]: any }): Promise<boolean> {
     const result = await this.model.deleteMany(conditions)
     return result.ok === 1 ? true : false
+  }
+
+  async pagination({
+    query,
+    limit,
+    skip,
+    sort,
+  }: {
+    query: { [key: string]: any }
+    limit: number
+    skip: number
+    sort: { [key: string]: any }
+  }): Promise<T[]> {
+    return this.model
+      .find(query)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
   }
 }

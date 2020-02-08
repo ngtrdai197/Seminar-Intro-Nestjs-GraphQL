@@ -3,11 +3,67 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+interface BaseEntity {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Conversation implements BaseEntity {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  createdById: String!
+  createdBy: User!
+  participantIds: [String!]
+  participants: [User!]
+  messageIds: [String!]
+  messages(skip: Int!, limit: Int!): [Message!]
+}
+
+type ConversationSubscription {
+  conversationId: String!
+  message: Message!
+}
+
+input CreateConversationInput {
+  name: String!
+  createdById: String
+  participantIds: [String!] = []
+}
+
+input CreateMessageInput {
+  createdById: String
+  content: String!
+}
+
 input CreateNewUserInput {
   username: String!
   fullName: String!
   password: String!
   address: String
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+input EditConversationInput {
+  """Name of the conversation"""
+  name: String
+
+  """People who join the conversation"""
+  participantIds: [String!]
+
+  """Messages ID in conversation"""
+  messageIds: [String!]
+}
+
+input EditMessageInput {
+  content: String
+  isEdited: Boolean
 }
 
 input EditPost {
@@ -29,12 +85,27 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
+type Message implements BaseEntity {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdById: String!
+  createdBy: User!
+  content: String!
+  isEdited: Boolean!
+}
+
 type Mutation {
   editUser(editUser: EditUserInput!, userId: String!): User!
   createNewPost(content: String, name: String!): Post!
   editPost(editPost: EditPost!, postId: String!): Post!
   createNewUser(newUser: CreateNewUserInput!): User!
   login(password: String!, username: String!): JSON!
+  createConversation(createConversation: CreateConversationInput!): Conversation!
+  updateConversation(conversationId: String!, updateConversation: EditConversationInput!): Conversation!
+  joinConversation(conversationId: String!): Conversation!
+  createNewMessage(conversationId: String!, newMessage: CreateMessageInput!): Message!
+  editMessage(messageId: String!, content: String!): Message!
 }
 
 type Post {
@@ -47,10 +118,12 @@ type Query {
   fetchUsers: [User!]!
   fetchPosts: [Post!]!
   me: User!
+  conversationById(id: String!): Conversation!
 }
 
 type Subscription {
   subscribeEditeUser(username: String!): User!
+  subscribeConversation(conversationId: String!): ConversationSubscription!
 }
 
 type User {

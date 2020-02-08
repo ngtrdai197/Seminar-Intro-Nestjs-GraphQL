@@ -14,7 +14,9 @@
     "interface-name": [false],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "semicolon": false
+    "semicolon": false,
+    "max-classes-per-file": false,
+    "no-unused-expression": false
   },
   "rulesDirectory": []
 }
