@@ -1,17 +1,21 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
+import * as compression from 'compression'
+import { NestExpressApplication } from '@nestjs/platform-express'
+
+import { AppModule } from './app.module'
 import { AllExceptionsFilter, HttpGqlExceptionFilter } from './common/filter'
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
   app.enableCors()
 
   app.setGlobalPrefix('/v1/api')
   // app.useGlobalFilters(new HttpGqlExceptionFilter(), new AllExceptionsFilter())
   app.useGlobalInterceptors(new LoggingInterceptor())
+  app.use(compression())
 
   const configService = app.get(ConfigService)
   await app.listen(configService.get<number>('PORT'), () => {

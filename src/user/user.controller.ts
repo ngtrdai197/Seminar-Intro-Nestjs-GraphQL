@@ -8,19 +8,51 @@ import {
   Body,
   Param,
   HttpStatus,
+  UploadedFiles,
+  UseInterceptors,
+  Post,
+  Res,
 } from '@nestjs/common'
+import { FilesInterceptor } from '@nestjs/platform-express'
+import { AuthGuard } from '@nestjs/passport'
+import { join } from 'path'
+import * as multer from 'multer'
+
 import { UserService } from './user.service'
 import { IUser } from './interface/user.interface'
-import { AuthGuard } from '@nestjs/passport'
 import { CurrentUser } from '@/common/decorators/current-user.decorator'
 import { RolesGuard } from '@/common/guards/roles.guard'
 import { Roles } from '@/common/decorators/roles.decorator'
 import { ValidationPipe } from '@/common/pipes/validation.pipe'
 import { EditUserDto } from './dto/edit-user.dto'
+import { editFileName } from '@/common/utils/editFilename.utils'
+import { imageFileFilter } from '@/common/utils/imageFileFilter.utils'
+import { Response } from 'express'
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Post('uploads/avatar')
+  @UseInterceptors(
+    FilesInterceptor('files', 20, {
+      storage: multer.diskStorage({
+        destination: join(__dirname, '..', 'public'),
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async uploadFiles(@UploadedFiles() files) {
+    console.log('files', files)
+  }
+
+  @Get('avatar')
+  getFile(@Res() res: Response) {
+    res.sendFile('2020-02-03-d4ce.png', {
+      root: join(__dirname, '..', 'public'),
+    })
+  }
 
   @Get('fetch')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
