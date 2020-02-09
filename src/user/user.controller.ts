@@ -25,9 +25,7 @@ export class UserController {
   @Get('fetch')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles(['admin, user'])
-  async fetchUsers(
-    @CurrentUser() user: IUser | { [key: string]: any },
-  ): Promise<IUser[]> {
+  async fetchUsers(): Promise<IUser[]> {
     return await this.userService.find()
   }
 
