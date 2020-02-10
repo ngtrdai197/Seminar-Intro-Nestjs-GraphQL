@@ -1,7 +1,8 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
+
 import { GqlAuthGuard } from '@/common/guards/gql.guard'
-import { GqlUser } from '@/common/decorators/current-user.decorator'
+import { GqlUser } from '@/common/decorators'
 import { IUser } from '@/user/interface/user.interface'
 import { IPost } from '../interfaces/post.interface'
 import { EditPost, Post } from '../post.entity'
@@ -29,13 +30,9 @@ export class MutationPostResolver {
   ): Promise<IPost> {
     const { id: createdBy } = user
     const post = await this.postService.create({ name, content })
-    await this.userService.findByIdAndUpdate(
-      createdBy,
-      {
-        $push: { postIds: post.id },
-      },
-      { new: true },
-    )
+    await this.userService.findByIdAndUpdate(createdBy, {
+      $push: { postIds: post.id },
+    })
     return post
   }
 

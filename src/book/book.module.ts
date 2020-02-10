@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common'
-import { BookController } from './book.controller'
-import { BookService } from './book.service'
 import { MongooseModule } from '@nestjs/mongoose'
+
+import { BookController } from './book.controller'
+import { BookMutationResolver, BookQueryResolver } from './graphql'
+import { BookService } from './book.service'
 import { BookSchema } from './schema/book.schema'
 import { BOOK_MODEL } from '@/common/constants'
+
+const resolvers = [BookMutationResolver, BookQueryResolver]
 
 @Module({
   imports: [
@@ -16,6 +20,7 @@ import { BOOK_MODEL } from '@/common/constants'
     ]),
   ],
   controllers: [BookController],
-  providers: [BookService],
+  providers: [...resolvers, BookService],
+  exports: [BookService],
 })
 export class BookModule {}

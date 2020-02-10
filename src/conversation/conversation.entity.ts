@@ -1,4 +1,5 @@
 import { ObjectType, Field, InputType } from 'type-graphql'
+
 import { User } from '@/user/user.entity'
 import { Message } from '@/message/message.entity'
 import { BaseEntity } from '@/common/base.entity'

@@ -1,4 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql'
+import { UseGuards, HttpException, HttpStatus } from '@nestjs/common'
+
 import {
   Conversation,
   CreateConversationInput,
@@ -7,9 +9,8 @@ import {
 import { ConversationService } from '../conversation.service'
 import { IConversation } from '../interfaces/conversation.interface'
 import { IUser } from '@/user/interface/user.interface'
-import { UseGuards, HttpException, HttpStatus } from '@nestjs/common'
 import { GqlAuthGuard } from '@/common/guards/gql.guard'
-import { GqlUser } from '@/common/decorators/current-user.decorator'
+import { GqlUser } from '@/common/decorators'
 
 @Resolver(() => Conversation)
 export class ConversationMutationResolver {

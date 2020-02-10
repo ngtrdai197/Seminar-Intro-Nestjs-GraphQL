@@ -1,5 +1,6 @@
-import { IBook } from '../interface/book.interface'
 import { IsString, IsOptional, IsNumber, IsArray } from 'class-validator'
+
+import { IBook } from '../interface/book.interface'
 
 export class EditBookDto implements Partial<IBook> {
   @IsOptional()

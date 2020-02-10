@@ -1,7 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
+
 import { PostService } from './post.service'
 import { MutationPostResolver, QueryPostResolver } from './graphql'
-import { MongooseModule } from '@nestjs/mongoose'
 import { PostSchema } from './schema/post.schema'
 import { UserModule } from '@/user/user.module'
 import { POST_MODEL } from '@/common/constants'

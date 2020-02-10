@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common'
+
 import { PostService } from './post.service'
 import { validateQuery } from '@/common/utils/validate-query.utils'
 

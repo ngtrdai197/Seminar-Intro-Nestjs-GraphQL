@@ -9,6 +9,19 @@ interface BaseEntity {
   updatedAt: DateTime!
 }
 
+type Book implements BaseEntity {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  author: String!
+  genres: [String!]!
+  description: String!
+  price: Float
+  createdById: String!
+  createdBy: User!
+}
+
 type Conversation implements BaseEntity {
   id: ID!
   createdAt: DateTime!
@@ -38,6 +51,15 @@ input CreateMessageInput {
   content: String!
 }
 
+input CreateNewBookInput {
+  name: String!
+  author: String!
+  genres: [String!]!
+  description: String!
+  price: Float
+  createdById: String
+}
+
 input CreateNewUserInput {
   username: String!
   fullName: String!
@@ -49,6 +71,14 @@ input CreateNewUserInput {
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
+
+input EditBookInput {
+  name: String
+  author: String
+  genres: [String!]
+  description: String
+  price: Float
+}
 
 input EditConversationInput {
   """Name of the conversation"""
@@ -101,6 +131,8 @@ type Mutation {
   editPost(editPost: EditPost!, postId: String!): Post!
   createNewUser(newUser: CreateNewUserInput!): User!
   login(password: String!, username: String!): JSON!
+  createBook(newBook: CreateNewBookInput!): Book!
+  update(editBook: EditBookInput!, bookId: String!): Book!
   createConversation(createConversation: CreateConversationInput!): Conversation!
   updateConversation(conversationId: String!, updateConversation: EditConversationInput!): Conversation!
   joinConversation(conversationId: String!): Conversation!
@@ -108,8 +140,10 @@ type Mutation {
   editMessage(messageId: String!, content: String!): Message!
 }
 
-type Post {
+type Post implements BaseEntity {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   content: String!
 }
@@ -118,6 +152,7 @@ type Query {
   fetchUsers: [User!]!
   fetchPosts: [Post!]!
   me: User!
+  fetchBooks: [Book!]!
   conversationById(id: String!): Conversation!
 }
 
@@ -126,8 +161,10 @@ type Subscription {
   subscribeConversation(conversationId: String!): ConversationSubscription!
 }
 
-type User {
+type User implements BaseEntity {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   username: String!
   password: String!
   fullName: String!

@@ -7,12 +7,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
+
 import { BookService } from './book.service'
 import { IBook } from './interface/book.interface'
 import { EditBookDto } from './dto/edit-book.dto'
 import { CreateBookDto } from './dto/create-book.dto'
-import { AuthGuard } from '@nestjs/passport'
-import { CurrentUser } from '@/common/decorators/current-user.decorator'
+import { CurrentUser } from '@/common/decorators'
 import { IUser } from '@/user/interface/user.interface'
 
 @Controller('book')

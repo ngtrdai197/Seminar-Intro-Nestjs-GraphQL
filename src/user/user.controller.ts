@@ -17,17 +17,16 @@ import { FilesInterceptor } from '@nestjs/platform-express'
 import { AuthGuard } from '@nestjs/passport'
 import { join } from 'path'
 import * as multer from 'multer'
+import { Response } from 'express'
 
 import { UserService } from './user.service'
 import { IUser } from './interface/user.interface'
-import { CurrentUser } from '@/common/decorators/current-user.decorator'
+import { CurrentUser, Roles } from '@/common/decorators'
 import { RolesGuard } from '@/common/guards/roles.guard'
-import { Roles } from '@/common/decorators/roles.decorator'
 import { ValidationPipe } from '@/common/pipes/validation.pipe'
 import { EditUserDto } from './dto/edit-user.dto'
 import { editFileName } from '@/common/utils/editFilename.utils'
 import { imageFileFilter } from '@/common/utils/imageFileFilter.utils'
-import { Response } from 'express'
 
 @Controller('user')
 export class UserController {

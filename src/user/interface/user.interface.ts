@@ -1,5 +1,6 @@
 import { Document } from 'mongoose'
-import { IPost } from '../../post/interfaces/post.interface'
+
+import { IPost } from '@/post/interfaces/post.interface'
 
 export interface IUser extends Document {
   readonly username: string

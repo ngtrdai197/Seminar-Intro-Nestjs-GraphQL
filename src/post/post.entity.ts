@@ -1,10 +1,9 @@
-import { ObjectType, Field, ID, InputType } from 'type-graphql'
+import { ObjectType, Field, InputType } from 'type-graphql'
 
-@ObjectType()
-export class Post {
-  @Field(() => ID)
-  id: string
+import { BaseEntity } from '@/common/base.entity'
 
+@ObjectType({ implements: BaseEntity })
+export class Post extends BaseEntity {
   @Field(() => String)
   name: string
 
@@ -12,7 +11,6 @@ export class Post {
   content: string
 }
 
-// tslint:disable-next-line: max-classes-per-file
 @InputType()
 export class EditPost {
   @Field(() => String, { nullable: true })

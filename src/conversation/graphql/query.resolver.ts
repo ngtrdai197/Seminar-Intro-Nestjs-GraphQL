@@ -1,7 +1,8 @@
-import { Conversation } from '../conversation.entity'
 import { UseGuards } from '@nestjs/common'
-import { GqlAuthGuard } from '@/common/guards/gql.guard'
 import { Args, Resolver, Query } from '@nestjs/graphql'
+
+import { Conversation } from '../conversation.entity'
+import { GqlAuthGuard } from '@/common/guards/gql.guard'
 import { IConversation } from '../interfaces/conversation.interface'
 import { ConversationService } from '../conversation.service'
 

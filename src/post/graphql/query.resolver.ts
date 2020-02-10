@@ -1,4 +1,5 @@
 import { Resolver, Query } from '@nestjs/graphql'
+
 import { Post } from '../post.entity'
 import { IPost } from '../interfaces/post.interface'
 import { PostService } from '../post.service'

@@ -6,6 +6,7 @@ export const PostSchema = new Schema(
     content: { type: String },
   },
   {
+    timestamps: true,
     toJSON: {
       virtuals: true,
       transform: (obj, ret) => {

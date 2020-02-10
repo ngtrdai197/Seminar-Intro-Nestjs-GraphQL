@@ -1,10 +1,11 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql'
+import { UseGuards, HttpException, HttpStatus } from '@nestjs/common'
+
 import { Message, CreateMessageInput } from '../message.entity'
 import { ConversationService } from '@/conversation/conversation.service'
 import { IMessage } from '../interfaces/message.interface'
-import { UseGuards, HttpException, HttpStatus } from '@nestjs/common'
 import { GqlAuthGuard } from '@/common/guards/gql.guard'
-import { GqlUser } from '@/common/decorators/current-user.decorator'
+import { GqlUser } from '@/common/decorators'
 import { IUser } from '@/user/interface/user.interface'
 import { MessageService } from '../message.service'
 import { PubsubService } from '@/pubsub/pubsub.service'
@@ -26,13 +27,9 @@ export class MessageMutationResolver {
   ): Promise<IMessage> {
     newMessage.createdById = user.id
     const message = await this.messageService.create(newMessage)
-    await this.conversationService.findByIdAndUpdate(
-      conversationId,
-      {
-        $push: { messageIds: message.id },
-      },
-      { new: true },
-    )
+    await this.conversationService.findByIdAndUpdate(conversationId, {
+      $push: { messageIds: message.id },
+    })
     this.pubsubService.pubsub.publish(`conversation.${conversationId}`, {
       subscribeConversation: { message, conversationId },
     })

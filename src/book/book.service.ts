@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+
 import { IBook } from './interface/book.interface'
 import { BOOK_MODEL } from '@/common/constants'
 import { BaseService } from '@/common/services/base.service'

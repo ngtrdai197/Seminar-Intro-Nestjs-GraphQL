@@ -1,4 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
+
 import {
   ConversationMutationResolver,
   ConversationQueryResolver,
@@ -6,7 +8,6 @@ import {
   ConversationSubscriptionResolver,
 } from './graphql'
 import { ConversationService } from './conversation.service'
-import { MongooseModule } from '@nestjs/mongoose'
 import { ConversationSchema } from './schemas/conversation.schema'
 import { CONVERSATION_MODEL } from '@/common/constants'
 import { UserModule } from '@/user/user.module'

@@ -1,10 +1,9 @@
-import { ObjectType, Field, ID, InputType } from 'type-graphql'
+import { ObjectType, Field, InputType } from 'type-graphql'
 
-@ObjectType()
-export class User {
-  @Field(() => ID)
-  id: string
+import { BaseEntity } from '@/common/base.entity'
 
+@ObjectType({ implements: BaseEntity })
+export class User extends BaseEntity {
   @Field(() => String)
   username: string
 
@@ -21,7 +20,6 @@ export class User {
   postIds: string[]
 }
 
-// tslint:disable-next-line: max-classes-per-file
 @InputType()
 export class EditUserInput implements Partial<User> {
   @Field(() => String, { nullable: true })
@@ -40,5 +38,5 @@ export class EditUserInput implements Partial<User> {
   postIds?: string[]
 
   @Field(() => [String], { nullable: true })
-  roles: string[]
+  roles?: string[]
 }

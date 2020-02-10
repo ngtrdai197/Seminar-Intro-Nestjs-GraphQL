@@ -1,9 +1,10 @@
 import { Module, forwardRef } from '@nestjs/common'
-import { MessageMutationResolver, MessagePropertyResolver } from './graphql/'
+import { MongooseModule } from '@nestjs/mongoose'
+
+import { MessageMutationResolver, MessagePropertyResolver } from './graphql'
 import { MessageService } from './message.service'
 import { MESSAGE_MODEL } from '@/common/constants'
 import { MessageSchema } from './schemas/message.schema'
-import { MongooseModule } from '@nestjs/mongoose'
 import { ConversationModule } from '@/conversation/conversation.module'
 import { UserModule } from '@/user/user.module'
 import { PubsubModule } from '@/pubsub/pubsub.module'

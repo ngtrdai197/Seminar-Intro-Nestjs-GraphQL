@@ -1,4 +1,5 @@
 import { Document } from 'mongoose'
+
 import { IUser } from '@/user/interface/user.interface'
 import { IMessage } from '@/message/interfaces/message.interface'
 

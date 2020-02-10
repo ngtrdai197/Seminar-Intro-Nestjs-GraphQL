@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { MESSAGE_MODEL } from '@/common/constants'
 import { Model } from 'mongoose'
+
+import { MESSAGE_MODEL } from '@/common/constants'
 import { IMessage } from './interfaces/message.interface'
 import { BaseService } from '@/common/services/base.service'
 

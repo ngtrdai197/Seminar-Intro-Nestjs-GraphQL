@@ -1,12 +1,13 @@
-import { UserService } from '@/user/user.service'
-import { Conversation } from '../conversation.entity'
 import { ResolveProperty, Parent, Args, Resolver } from '@nestjs/graphql'
+import { Int } from 'type-graphql'
+
+import { Conversation } from '../conversation.entity'
+import { UserService } from '@/user/user.service'
 import { User } from '@/user/user.entity'
 import { IUser } from '@/user/interface/user.interface'
 import { Message } from '@/message/message.entity'
 import { IMessage } from '@/message/interfaces/message.interface'
 import { MessageService } from '@/message/message.service'
-import { Int } from 'type-graphql'
 
 @Resolver(() => Conversation)
 export class ConversationPropertyResolver {

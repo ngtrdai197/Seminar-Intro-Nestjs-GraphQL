@@ -4,10 +4,11 @@ import {
   HttpStatus,
   BadRequestException,
 } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+
 import { UserService } from '@/user/user.service'
 import { IUser } from '@/user/interface/user.interface'
 import { LoginDto } from './dto/login.dto'
-import { JwtService } from '@nestjs/jwt'
 import { IValidatePayload } from './interface/validate-payload.interface'
 import { CreateUserDto } from '@/user/dto/create-user.dto'
 

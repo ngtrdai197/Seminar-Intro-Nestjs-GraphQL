@@ -24,6 +24,7 @@ export const BookSchema = new Schema(
     createdById: { type: String, required: true },
   },
   {
+    timestamps: true,
     toJSON: {
       virtuals: true,
       transform: (obj, ret) => {

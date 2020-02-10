@@ -1,10 +1,11 @@
 import { User } from '@/user/user.entity'
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql'
+import { GraphQLJSON } from 'graphql-type-json'
+
 import { AuthService } from './auth.service'
 import { IUser } from '@/user/interface/user.interface'
 import { CreateNewUserInput } from './auth.entity'
-import { GraphQLJSON } from 'graphql-type-json'
-import { GqlUser } from '@/common/decorators/current-user.decorator'
+import { GqlUser } from '@/common/decorators'
 import { UseGuards } from '@nestjs/common'
 import { GqlAuthGuard } from '@/common/guards/gql.guard'
 
