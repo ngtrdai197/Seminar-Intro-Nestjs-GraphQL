@@ -1,8 +1,10 @@
 FROM node:10-alpine
 
-WORKDIR /app
+ENV app=/app
 
-COPY . .
+WORKDIR ${app}
+
+COPY . .${app}
 
 RUN yarn
 

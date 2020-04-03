@@ -2,6 +2,8 @@ version: '3.5'
 
 services:
   nest-server:
+    env_file:
+      - .env
     container_name: nest-server
     image: nest-server/nest
     build:
@@ -10,7 +12,7 @@ services:
     volumes:
       - ./:/app
     ports:
-      - '3000:3000'
+      - $PORT:$PORT
     depends_on:
       - nest-mongodb
     restart: always
