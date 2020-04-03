@@ -1,4 +1,4 @@
-import { ObjectType, Field, InputType } from 'type-graphql'
+import { ObjectType, Field, InputType } from '@nestjs/graphql'
 
 import { User } from '@/user/user.entity'
 import { Message } from '@/message/message.entity'

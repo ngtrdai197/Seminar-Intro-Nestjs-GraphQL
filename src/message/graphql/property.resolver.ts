@@ -1,4 +1,4 @@
-import { Resolver, ResolveProperty, Parent } from '@nestjs/graphql'
+import { Resolver, ResolveField, Parent } from '@nestjs/graphql'
 
 import { Message } from '../message.entity'
 import { User } from '@/user/user.entity'
@@ -9,8 +9,8 @@ import { UserService } from '@/user/user.service'
 export class MessagePropertyResolver {
   constructor(private readonly userService: UserService) {}
 
-  @ResolveProperty(() => User)
-  async createdBy(@Parent() message: Message): Promise<IUser> {
-    return await this.userService.findById(message.createdById)
+  @ResolveField('createdBy', () => User)
+  async getCreatedBy(@Parent() message: Message): Promise<IUser> {
+    return this.userService.findById(message.createdById)
   }
 }

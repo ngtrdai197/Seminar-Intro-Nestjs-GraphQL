@@ -1,4 +1,4 @@
-import { ObjectType, Field, InputType } from 'type-graphql'
+import { ObjectType, Field, InputType, Int } from '@nestjs/graphql'
 
 import { BaseEntity } from '@/common/base.entity'
 
@@ -39,4 +39,19 @@ export class EditUserInput implements Partial<User> {
 
   @Field(() => [String], { nullable: true })
   roles?: string[]
+}
+
+@ObjectType()
+export class PaginationUser {
+  @Field(() => Int, { nullable: true })
+  total?: number
+
+  @Field(() => Boolean, { nullable: true })
+  hasNext?: number
+
+  @Field(() => Boolean, { nullable: true })
+  hasPre?: boolean
+
+  @Field(() => [User])
+  results: User[]
 }

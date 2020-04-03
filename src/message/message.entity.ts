@@ -1,7 +1,7 @@
-import { Field, ObjectType, InputType } from 'type-graphql'
+import { Field, ObjectType, InputType, Int } from '@nestjs/graphql'
 
 import { User } from '@/user/user.entity'
-import { BaseEntity } from '@/common/base.entity'
+import { BaseEntity, PaginationBase } from '@/common/base.entity'
 
 @ObjectType({ implements: BaseEntity })
 export class Message extends BaseEntity {
@@ -34,4 +34,10 @@ export class EditMessageInput {
 
   @Field(() => Boolean, { nullable: true })
   isEdited?: boolean
+}
+
+@ObjectType({ implements: PaginationBase })
+export class PaginationMessage extends PaginationBase {
+  @Field(() => [Message])
+  results: Message[]
 }
