@@ -1,4 +1,5 @@
 import { Model, Document, QueryFindOneAndUpdateOptions } from 'mongoose'
+import { IPagination } from '../base.interface'
 
 export abstract class BaseService<T extends Document> {
   NOT_FOUND_ERROR = 'Record does not exists'
@@ -65,15 +66,21 @@ export abstract class BaseService<T extends Document> {
     skip,
     sort,
   }: {
-    query: { [key: string]: any }
+    query?: { [key: string]: any }
     limit: number
     skip: number
-    sort: { [key: string]: any }
-  }): Promise<T[]> {
-    return this.model
+    sort?: { [key: string]: any }
+  }): Promise<IPagination<T>> {
+    const results = await this.model
       .find(query)
       .sort(sort)
       .skip(skip)
       .limit(limit)
+    const total = await this.model.countDocuments()
+    return {
+      total,
+      hasNext: results.length < total,
+      results,
+    } as IPagination<T>
   }
 }

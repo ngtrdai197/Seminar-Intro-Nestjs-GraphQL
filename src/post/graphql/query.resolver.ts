@@ -10,6 +10,6 @@ export class QueryPostResolver {
 
   @Query(() => [Post])
   async fetchPosts(): Promise<IPost[]> {
-    return await this.postService.find()
+    return this.postService.find()
   }
 }

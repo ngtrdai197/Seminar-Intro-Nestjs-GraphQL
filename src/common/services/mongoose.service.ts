@@ -9,7 +9,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
     return {
       // TODO: check it, why not able connect to db when use configService
       // uri: this.configService.get<string>('DB_CONNECTION_STRING'),
-      uri: `mongodb://nest-mongodb:27017/book-store`,
+      uri: `mongodb://localhost:27017/book-store`,
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,

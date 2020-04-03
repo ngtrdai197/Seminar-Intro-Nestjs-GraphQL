@@ -13,6 +13,6 @@ export class ConversationQueryResolver {
   @Query(() => Conversation)
   @UseGuards(GqlAuthGuard)
   async conversationById(@Args('id') id: string): Promise<IConversation> {
-    return await this.conversationService.findById(id)
+    return this.conversationService.findById(id)
   }
 }

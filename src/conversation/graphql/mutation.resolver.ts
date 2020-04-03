@@ -25,10 +25,10 @@ export class ConversationMutationResolver {
     const exsits = newConversation.participantIds.includes(user.id)
     newConversation.createdById = user.id
     if (exsits) {
-      return await this.conversationService.create(newConversation)
+      return this.conversationService.create(newConversation)
     }
     newConversation.participantIds.push(user.id)
-    return await this.conversationService.create(newConversation)
+    return this.conversationService.create(newConversation)
   }
 
   @Mutation(() => Conversation)
@@ -37,11 +37,10 @@ export class ConversationMutationResolver {
     @Args('updateConversation') updateConversation: EditConversationInput,
     @Args('conversationId') id: string,
   ): Promise<IConversation> {
-    return await this.conversationService.findByIdAndUpdate(
-      id,
-      updateConversation,
-      { new: true, upsert: true },
-    )
+    return this.conversationService.findByIdAndUpdate(id, updateConversation, {
+      new: true,
+      upsert: true,
+    })
   }
 
   @Mutation(() => Conversation)
