@@ -1,4 +1,4 @@
-import { ObjectType, Field, InputType, Int } from '@nestjs/graphql'
+import { ObjectType, Field, InputType, Int, PartialType } from '@nestjs/graphql'
 
 import { BaseEntity, PaginationBase } from '@/common/base.entity'
 
@@ -18,28 +18,13 @@ export class User extends BaseEntity {
 
   @Field(() => [String], { nullable: true })
   postIds: string[]
+
+  @Field(() => [String])
+  roles: string[]
 }
 
 @InputType()
-export class EditUserInput implements Partial<User> {
-  @Field(() => String, { nullable: true })
-  username?: string
-
-  @Field(() => String, { nullable: true })
-  address?: string
-
-  @Field(() => String, { nullable: true })
-  fullName?: string
-
-  @Field(() => String, { nullable: true })
-  password?: string
-
-  @Field(() => String, { nullable: true })
-  postIds?: string[]
-
-  @Field(() => [String], { nullable: true })
-  roles?: string[]
-}
+export class EditUserInput extends PartialType(User) {}
 
 @ObjectType({ implements: PaginationBase })
 export class PaginationUser extends PaginationBase {

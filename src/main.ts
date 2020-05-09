@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
-import * as compression from 'compression'
+import compression from 'compression'
 import { NestExpressApplication } from '@nestjs/platform-express'
 
 import { AppModule } from './app.module'

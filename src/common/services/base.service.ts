@@ -10,16 +10,16 @@ export abstract class BaseService<T extends Document> {
   }
 
   async updateMany(
-    conditions: { [key: string]: any },
-    doc: { [key: string]: any },
-    options: { [key: string]: any },
+    conditions: object,
+    doc: object,
+    options: object,
   ): Promise<T[]> {
     return this.model.updateMany(conditions, doc, options)
   }
 
   async findOneAndUpdate(
-    conditions: { [key: string]: any },
-    doc: { [key: string]: any },
+    conditions: object,
+    doc: object,
     options: QueryFindOneAndUpdateOptions,
   ): Promise<T> {
     return this.model.findOneAndUpdate(conditions, doc, options)
@@ -27,22 +27,22 @@ export abstract class BaseService<T extends Document> {
 
   async findByIdAndUpdate(
     id: string,
-    doc: { [key: string]: any },
+    doc: object,
     options?: QueryFindOneAndUpdateOptions,
   ): Promise<T> {
     return this.model.findByIdAndUpdate(id, doc, options)
   }
 
-  async countDocuments(criteria: { [key: string]: any }) {
+  async countDocuments(criteria: object) {
     return this.model.countDocuments(criteria)
   }
 
-  async find(conditions?: { [key: string]: any }): Promise<T[]> {
+  async find(conditions?: object): Promise<T[]> {
     conditions = conditions ?? {}
     return this.model.find(conditions)
   }
 
-  async findOne(conditions: { [key: string]: any }): Promise<T> {
+  async findOne(conditions: object): Promise<T> {
     return this.model.findOne(conditions)
   }
 
@@ -50,12 +50,12 @@ export abstract class BaseService<T extends Document> {
     return this.model.findById(id)
   }
 
-  async delete(conditions: { [key: string]: any }): Promise<boolean> {
+  async delete(conditions: object): Promise<boolean> {
     const result = await this.model.deleteOne(conditions)
     return result.ok === 1 ? true : false
   }
 
-  async deleteMany(conditions: { [key: string]: any }): Promise<boolean> {
+  async deleteMany(conditions: object): Promise<boolean> {
     const result = await this.model.deleteMany(conditions)
     return result.ok === 1 ? true : false
   }
@@ -66,7 +66,7 @@ export abstract class BaseService<T extends Document> {
     skip,
     sort,
   }: {
-    query?: { [key: string]: any }
+    query?: object
     limit: number
     skip: number
     sort?: { [key: string]: any }
