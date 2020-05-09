@@ -53,7 +53,7 @@ export class AuthService {
       fullName,
     }
     const token = this.createToken(payload)
-    return { accessToken: token }
+    return { user, accessToken: token }
   }
 
   private createToken = (payload: IValidatePayload): string => {
