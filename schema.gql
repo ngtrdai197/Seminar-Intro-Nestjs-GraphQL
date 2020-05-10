@@ -184,5 +184,6 @@ type User implements BaseEntity {
   fullName: String!
   address: String
   postIds: [String!]
+  roles: [String!]!
   posts(postName: String): [Post!]
 }

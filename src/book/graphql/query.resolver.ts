@@ -10,6 +10,6 @@ export class BookQueryResolver {
 
   @Query(() => [Book])
   async fetchBooks(): Promise<IBook[]> {
-    return await this.bookService.find()
+    return this.bookService.find()
   }
 }
