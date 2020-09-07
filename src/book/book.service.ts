@@ -14,4 +14,8 @@ export class BookService extends BaseService<IBook> {
   ) {
     super(bookModel)
   }
+
+  async create(doc: any): Promise<IBook> {
+    return this.bookModel.create(doc)
+  }
 }

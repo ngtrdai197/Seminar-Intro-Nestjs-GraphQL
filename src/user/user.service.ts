@@ -14,4 +14,8 @@ export class UserService extends BaseService<IUser> {
   ) {
     super(userModel)
   }
+
+  async create(doc: { [key: string]: any }): Promise<IUser> {
+    return this.userModel.create(doc)
+  }
 }

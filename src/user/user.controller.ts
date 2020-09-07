@@ -54,10 +54,14 @@ export class UserController {
   }
 
   @Get('fetch')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles(['admin, user'])
+  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  // @Roles(['admin, user'])
   async fetchUsers(): Promise<IUser[]> {
     return await this.userService.find()
+  }
+  @Get(':id')
+  async userById(@Param('id') userId: string): Promise<IUser> {
+    return this.userService.findById(userId)
   }
 
   @Put('update/:userId')

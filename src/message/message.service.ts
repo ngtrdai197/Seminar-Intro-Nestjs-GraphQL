@@ -13,4 +13,8 @@ export class MessageService extends BaseService<IMessage> {
   ) {
     super(messageModel)
   }
+
+  async create(doc: { [key: string]: any }): Promise<IMessage> {
+    return this.messageModel.create(doc)
+  }
 }

@@ -5,10 +5,6 @@ export abstract class BaseService<T extends Document> {
   NOT_FOUND_ERROR = 'Record does not exists'
   constructor(protected readonly model: Model<T, {}>) {}
 
-  async create(doc: { [key: string]: any }): Promise<T> {
-    return this.model.create(doc)
-  }
-
   async updateMany(
     conditions: object,
     doc: object,

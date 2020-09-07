@@ -14,4 +14,8 @@ export class PostService extends BaseService<IPost> {
   ) {
     super(postModel)
   }
+
+  async create(doc: { [key: string]: any }): Promise<IPost> {
+    return this.postModel.create(doc)
+  }
 }

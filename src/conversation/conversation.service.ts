@@ -14,4 +14,8 @@ export class ConversationService extends BaseService<IConversation> {
   ) {
     super(conversationModel)
   }
+
+  async create(doc: { [key: string]: any }): Promise<IConversation> {
+    return this.conversationModel.create(doc)
+  }
 }
